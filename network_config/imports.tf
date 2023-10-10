@@ -24,12 +24,12 @@ import {
 
 import {
   to = module.main.aws_route.public_internet_gateway[0]
-  id = "rtb-05c269505c4426d48|0.0.0.0/0" #DefaultPublicRoute
+  id = "rtb-05c269505c4426d48_0.0.0.0/0" #DefaultPublicRoute
 }
 
 import {
   to = module.main.aws_route_table.public[0]
-  id = "rtb-0ba1a997053947a57" #PublicRouteTable
+  id = "rtb-05c269505c4426d48" #PublicRouteTable
 }
 
 # import {
