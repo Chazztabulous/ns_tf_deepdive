@@ -15,9 +15,8 @@
 *.pem
 
 # Consul data directories
-**/network_config/*
+# **/network_config/*
 **/application_config/*
-/Users/nstricklett/_REPOS/ns_tf_deepdive/network_config/*
 
 # .hcl files
 *.hcl
