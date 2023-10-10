@@ -32,10 +32,10 @@ import {
   id = "rtb-05c269505c4426d48" #PublicRouteTable
 }
 
-# import {
-#   to = module.main.aws_route_table_association.public[0]
-#   id = "subnet-03f7796e6819b67ba/rtb-05c269505c4426d48" #PublicSubnet1/PublicRouteTable
-# }
+import {
+  to = module.main.aws_route_table_association.public[0]
+  id = "subnet-03f7796e6819b67ba/rtb-05c269505c4426d48" #PublicSubnet1/PublicRouteTable
+}
 
 # import {
 #   to = module.main.aws_route_table_association.public[1]
