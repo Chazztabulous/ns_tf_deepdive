@@ -4,27 +4,27 @@
 
 import {
   to = module.main.aws_vpc.this[0]
-  id = "vpc-0a3db63590f5d3e94" #VPC
+  id = "vpc-0d60af1d030cdaea3" #VPC
 }
 
 import {
   to = module.main.aws_subnet.public[0]
-  id = "subnet-0d451f1e1b3c86081" #PublicSubnet1
+  id = "subnet-03f7796e6819b67ba" #PublicSubnet1
 }
 
 import {
   to = module.main.aws_subnet.public[1]
-  id = "subnet-0dfb3e7159f128110" #PublicSubnet2
+  id = "subnet-0609a6c62eb8644b1" #PublicSubnet2
 }
 
 import {
   to = module.main.aws_internet_gateway.this[0]
-  id = "igw-0be847d9afd70a78a" #InternetGateway
+  id = "igw-08ac14f1013935b72" #InternetGateway
 }
 
 import {
   to = module.main.aws_route.public_internet_gateway[0]
-  id = "rtb-0ba1a997053947a57_0.0.0.0/0" #DefaultPublicRoute
+  id = "rtb-05c269505c4426d48_0.0.0.0/0" #DefaultPublicRoute
 }
 
 import {
@@ -34,15 +34,15 @@ import {
 
 import {
   to = module.main.aws_route_table_association.public[0]
-  id = "subnet-0d451f1e1b3c86081/rtb-0ba1a997053947a57" #PublicSubnet1/PublicRouteTable
+  id = "subnet-03f7796e6819b67ba/rtb-05c269505c4426d48" #PublicSubnet1/PublicRouteTable
 }
 
 import {
   to = module.main.aws_route_table_association.public[1]
-  id = "subnet-0dfb3e7159f128110/rtb-0ba1a997053947a57" #PublicSubnet2/PublicRouteTable
+  id = "subnet-0609a6c62eb8644b1/rtb-05c269505c4426d48" #PublicSubnet2/PublicRouteTable
 }
 
 import {
   to = aws_security_group.ingress
-  id = "sg-010a3f3162c4fde51" #NoIngressSecurityGroup
+  id = "" #NoIngressSecurityGroup
 }
