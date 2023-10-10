@@ -1,51 +1,40 @@
 # Deep-Dive-Terraform
 
-Welcome to Terraform - Deep Dive.  These exercise files are meant to accompany my course on [Pluralsight](https://app.pluralsight.com/library/courses/deep-dive-terraform/).  The course was developed using version 0.11.x of Terraform.  The video clips are still using that version, but the exercise files have been updated to support version 0.12.x. As far as I know there are no coming changes that will significantly impact the validity of these exercise files.  But I also don't control all the plug-ins, providers, and modules used by the configurations. 
+Welcome to Terraform - Deep Dive version 3.  These exercise files are meant to accompany my course on [Pluralsight](https://app.pluralsight.com/library/courses/terraform-deep-dive-2023).  The course was developed using version 1.5.x of Terraform.
+
+If you're looking for the older versions of the course, that is still available on the v1 and v2 branches. I am no longer maintaining them, but I thought I would keep them around for posterity or if you're already working through those versions of the course.
 
 ## AWS Account
 
-You are going to need an account where you have FullAdmin permissions. You are going to be creating policies, roles, users, access keys, VPCs, etc. If you don't have enough permissions in your current environment, then I recommend creating a temporary account to mess around in. In fact, probably do that regardless. You don't want to accidentally mess something up at work because you were trying to learn about Terraform.
+You are going to need an account where you have FullAdmin permissions. You are going to be creating policies, roles, profiles, VPCs, etc. If you don't have enough permissions in your current environment, then I recommend creating a temporary account to mess around in. In fact, probably do that regardless. You don't want to accidentally mess something up at work because you were trying to learn about Terraform.
+
+You may exceed your EIP address quota when deploying multiple enviornments. You can request an increase through the AWS console in the Services Quotas area, under the Amazon Elastic Compute Cloud category. I recommend setting it to 15 just to be safe. It should be approved almost immediately, but may take 30 minutes to apply. So if you do it now, it should be ready long before you get to that portion of the course.
 
 ## Using the files
 
-Each folder represents a module from the course and is completely self contained.  In each module and subfolder there will be an example of the *tfvars* file that you will use named *terraform.tfvars.example*.  Simply update the contents of the file and rename it *terraform.tfvars*.  Due to the sensitive nature of the information you place in the *tfvars* file, **do not** check it into source control, especially a public repository.  Some of us - *read me* - have made that mistake before and had to delete AWS access keys post-haste.
+Each folder represents a module from the course and they all build off of each other. You will be creating two working directories in your local copy of the exercise files: `network_config` and `application_config`. Both of these folders are part of the `.gitignore` so they will not be committed back to the repository.
 
-Once you have updated and renamed the *tfvars* file(s), you can run the commands in the *name_commands.txt* file, where the *name* is the name of the module or folder.  Be sure to run the commands from the same directory that the commands text file is located in.  Or you can just noodle around on the terraform CLI and see what you can discover/break.  If you run into an issue, please submit it as such and I will do my best to remediate it.
-
-Aside from module 2, all the other modules include subfolders that are numbered in the order they should be run. In most cases this is to deploy the remote state location and set up prerequisites. Please note, the folder structure **will not** mirror what you see in the course. I have tried to reorganize things to make it easier to follow along with the concepts.
-
-## AWS Key Pairs
-
-One of the most common issues reported by people is confusion over AWS Key Pairs and Regions.  The Terraform configurations make use of us-east-1 (N. Virginia) as the default region.  You can override that region by changing the default or submitting a different value for `var.region`.  The AWS Key Pair you use must be created in the same region you have selected for deployment.  You can create those keys from either the AWS EC2 Console or the AWS CLI.  If you are using the CLI, the process is very simple.
-
-```console
-aws configure set region your_region_name
-aws ec2 create-key-pair --key-name your_key_name
-```
-
-The json output will include a KeyMaterial section.  Copy and paste the contents of the KeyMaterial section starting with `-----BEGIN RSA PRIVATE KEY-----` and ending with `-----END RSA PRIVATE KEY-----` to a file with a .pem extension.  Then point the *tfvars* entry for `private_key_path` to the full path for the file.
-
-If you are using Windows, remember that the file path backslashes need to be doubled, since the single backslash is the escape character for other special characters.  For instance, the path `C:\Users\Ned\mykey.pem` should be entered as `C:\\Users\\Ned\\mykey.pem`.
+In the module folders, I have included Terraform configurations to help set up the necessary prerequisites. I've also included the commands you should run if you're following along. You don't have to run them verbatim, and I encourage you to mess around and try out different flags and commands.  If you run into an issue, please submit it as such and I will do my best to remediate it.
 
 ## Line Endings
 
-Another issue I have discovered from time to time is that Terraform doesn't much like the Windows style of ending a line with both a Carriage Return (CR) and a Line Feed (LF), commonly referred to as CRLF.  If you are experiencing strange parsing issues, change the line ending to be Line Feed (LF) only.  In VS Code this can be down by clicking on the CRLF in the lower right corner and changing it to LF.
+An issue I have discovered from time to time is that Terraform doesn't much like the Windows style of ending a line with both a Carriage Return (CR) and a Line Feed (LF), commonly referred to as CRLF.  If you are experiencing strange parsing issues, change the line ending to be Line Feed (LF) only.  In VS Code this can be down by clicking on the CRLF in the lower right corner and changing it to LF.
 
 ## MONEY!!!
 
-A gentle reminder about cost.  The course will have you creating resources in AWS.  Some of the resources are not going to be 100% free.  In most cases I have tried to use the [Free-tier](https://aws.amazon.com/free/) when possible, but in some cases I have elected to use a larger size EC2 instance to demonstrate the possibilities with multiple environments. Additionally, the NAT gateways in the networking sections are not free! They can run about $40 a piece for the month.
+A gentle reminder about cost.  The course will have you creating resources in AWS.  Some of the resources are not going to be 100% free.  In most cases I have tried to use the [Free-tier](https://aws.amazon.com/free/) when possible, but AWS is about to start charging for IPv4 addresses even when they're attached to a resource. I'm not sure how this will impact the free tier, so just be cognizant of what you're creating.
 
-When you complete an exercise in the course, be sure to tear down the infrastructure.  Each exercise file ends with `terraform destroy`.  Just run that command and approve the destruction to remove all resources from AWS. You should remove infrastructure in the reverse order that it was deployed. Destroy folder `5-applications`, then `4-networking`, then `2-lambda`. You get the idea.
+When you complete an exercise in the course, you can always run `terraform destroy` and approve the destruction to remove all resources from AWS. Once you get to the application deployment, you will need to leave the networking in place for a successful application deployment. If you wish to tear things down, destroy the application first and then the network.
 
-### Module 5
+## Terraform Cloud and GitHub Actions
 
-A special note about module 5. The process has you deploy resources using Jenkins. In order to destroy the infrastructure, kick off a build and select *Cancel* during the approval stage. Cancelling the process with trigger a destruction of the environment. Don't use this process in real life, you'll end up with some very unhappy Ops folks.
+Previous versions of this course used Docker, Consul, and Jenkins to provide remote state and CI/CD operations. This ended up being a sticking point for several people, and they ended up abandoning the course. To simplify things, I have replaced those technologies with Terraform Cloud and GitHub Actions. This is not an overt endorsement of either technology, there are plenty of other great options when it comes to remote state storage and CI/CD for IaC. I chose GitHub Actions because we are already using GitHub any way, and I chose Terraform Cloud because it has a solid free tier and it is part of the Terraform Associate certification. Speaking of which...
 
 ## Certification
 
-HashiCorp has released the *Terraform Certified Associate* certification.  You might be wondering if this course fully prepares you for the cert.  **It does not.**  Taking this course along with the [Terraform - Getting Started]((https://app.pluralsight.com/library/courses/terraform-getting-started) course on Pluralsight will meet most of the learning objectives for the certification, but there is no substitute for running the software on your own and hacking away.
+HashiCorp has released the *Terraform Certified Associate* certification.  You might be wondering if this course fully prepares you for the cert.  **It does not.**  Taking this course along with the [Terraform - Getting Started](https://app.pluralsight.com/library/courses/terraform-getting-started-2023) course on Pluralsight will meet all of the learning objectives for the certification, but there is no substitute for running the software on your own and hacking away.
 
-I have coauthored a certification guide which you can find on [Leanpub](https://leanpub.com/terraform-certified/).  This is an unofficial guide, but I believe in concert with the Pluralsight courses you will be in a good position to sit the exam.
+I have coauthored a certification guide with Adin Ermie which you can find on [Leanpub](https://leanpub.com/terraform-certified/).  This is an unofficial guide, but I believe in concert with the Pluralsight courses you will be in a good position to sit the exam.
 
 ## Conclusion
 
