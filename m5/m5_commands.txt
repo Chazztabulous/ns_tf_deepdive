@@ -3,7 +3,7 @@
 $env:GITHUB_TOKEN="TOKEN_VALUE"
 
 # bash or zsh
-export GITHUB_TOKEN=TOKEN_VALUE
+export GITHUB_TOKEN=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
 
 # Head into the m5/github_config directory
 cd ./m5/github_config
