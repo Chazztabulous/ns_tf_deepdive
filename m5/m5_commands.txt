@@ -70,10 +70,10 @@ terraform init
 
 # Replace the organization name with your org name
 # PowerShell environment variable
-terraform apply -var="gh_pat=$env:GITHUB_TOKEN" -var="organization=ORG_NAME"
+terraform apply -var="gh_pat=$env:GITHUB_TOKEN" -var="organization=Costco-xz735"
 
 # Bash or zsh environment variable
-terraform apply -var="gh_pat=$GITHUB_TOKEN" -var="organization=ORG_NAME"
+terraform apply -var="gh_pat=$GITHUB_TOKEN" -var="organization=Costco-xz735"
 
 # Create a new branch called add-third-subnet
 git checkout -b add-third-subnet
